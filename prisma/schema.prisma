@@ -1,0 +1,63 @@
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Difficulty {
+  EASY
+  MEDIUM
+  HARD
+}
+
+model User {
+  id                String             @id @default(cuid())
+  name              String
+  email             String             @unique
+  passwordHash      String
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  submissions       Submission[]
+  interviewSessions InterviewSession[]
+}
+
+model DsaQuestion {
+  id          String       @id @default(cuid())
+  title       String
+  slug        String       @unique
+  description String
+  difficulty  Difficulty   @default(EASY)
+  topic       String
+  examples    Json?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  submissions Submission[]
+}
+
+model Submission {
+  id         String      @id @default(cuid())
+  code       String
+  language   String
+  status     String
+  runtime    Int?
+  createdAt  DateTime    @default(now())
+  userId     String
+  questionId String
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  question   DsaQuestion @relation(fields: [questionId], references: [id], onDelete: Cascade)
+}
+
+model InterviewSession {
+  id        String   @id @default(cuid())
+  role      String
+  type      String
+  score     Int?
+  feedback  String?
+  createdAt DateTime @default(now())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
