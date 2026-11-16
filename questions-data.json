@@ -1,0 +1,215 @@
+
+{
+  "questions": [
+    {
+      "title": "Find the Largest Element",
+      "slug": "largest-element",
+      "description": "Given an array of integers, find and return the largest element.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Reverse an Array",
+      "slug": "reverse-array",
+      "description": "Given an array, reverse its elements and return the reversed array.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Find the Second Largest Element",
+      "slug": "second-largest-element",
+      "description": "Find the second largest distinct element in an array. Return -1 if it does not exist.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Move Zeros to End",
+      "slug": "move-zeros",
+      "description": "Move all zeros to the end of an array while maintaining the relative order of non-zero elements.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Remove Duplicates from Sorted Array",
+      "slug": "remove-duplicates-sorted-array",
+      "description": "Remove duplicate values from a sorted array and return the number of unique elements.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Maximum Subarray Sum",
+      "slug": "maximum-subarray-sum",
+      "description": "Find the maximum sum of a contiguous subarray in an integer array.",
+      "difficulty": "MEDIUM",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Rotate Array",
+      "slug": "rotate-array",
+      "description": "Rotate an array to the right by k positions.",
+      "difficulty": "MEDIUM",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Best Time to Buy and Sell Stock",
+      "slug": "best-time-buy-sell-stock",
+      "description": "Given daily stock prices, find the maximum profit possible by buying once and selling once later.",
+      "difficulty": "EASY",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Merge Two Sorted Arrays",
+      "slug": "merge-two-sorted-arrays",
+      "description": "Merge two sorted arrays into one sorted array.",
+      "difficulty": "MEDIUM",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Product of Array Except Self",
+      "slug": "product-array-except-self",
+      "description": "Return an array where each element is the product of all other elements, without using division.",
+      "difficulty": "MEDIUM",
+      "topic": "Arrays"
+    },
+    {
+      "title": "Reverse a String",
+      "slug": "reverse-string",
+      "description": "Given a string, return the string with its characters in reverse order.",
+      "difficulty": "EASY",
+      "topic": "Strings"
+    },
+    {
+      "title": "Check Palindrome String",
+      "slug": "palindrome-string",
+      "description": "Check whether a given string reads the same forward and backward.",
+      "difficulty": "EASY",
+      "topic": "Strings"
+    },
+    {
+      "title": "Count Vowels",
+      "slug": "count-vowels",
+      "description": "Count the number of vowels in a given string.",
+      "difficulty": "EASY",
+      "topic": "Strings"
+    },
+    {
+      "title": "First Non-Repeating Character",
+      "slug": "first-non-repeating-character",
+      "description": "Find the first character in a string that appears only once.",
+      "difficulty": "EASY",
+      "topic": "Strings"
+    },
+    {
+      "title": "Valid Anagram",
+      "slug": "valid-anagram",
+      "description": "Determine whether two strings contain the same characters with the same frequencies.",
+      "difficulty": "EASY",
+      "topic": "Strings"
+    },
+    {
+      "title": "Longest Substring Without Repeating Characters",
+      "slug": "longest-substring-no-repeat",
+      "description": "Find the length of the longest substring containing no repeated characters.",
+      "difficulty": "MEDIUM",
+      "topic": "Strings"
+    },
+    {
+      "title": "Reverse Linked List",
+      "slug": "reverse-linked-list",
+      "description": "Reverse a singly linked list and return its new head.",
+      "difficulty": "MEDIUM",
+      "topic": "Linked Lists"
+    },
+    {
+      "title": "Find Middle of Linked List",
+      "slug": "middle-linked-list",
+      "description": "Find and return the middle node of a singly linked list.",
+      "difficulty": "EASY",
+      "topic": "Linked Lists"
+    },
+    {
+      "title": "Detect Cycle in Linked List",
+      "slug": "detect-cycle-linked-list",
+      "description": "Determine whether a linked list contains a cycle.",
+      "difficulty": "MEDIUM",
+      "topic": "Linked Lists"
+    },
+    {
+      "title": "Merge Two Sorted Linked Lists",
+      "slug": "merge-sorted-linked-lists",
+      "description": "Merge two sorted linked lists into one sorted linked list.",
+      "difficulty": "MEDIUM",
+      "topic": "Linked Lists"
+    },
+    {
+      "title": "Implement Stack Using Array",
+      "slug": "stack-using-array",
+      "description": "Implement a stack supporting push, pop, peek and isEmpty operations.",
+      "difficulty": "EASY",
+      "topic": "Stacks"
+    },
+    {
+      "title": "Next Greater Element",
+      "slug": "next-greater-element",
+      "description": "For each array element, find the next greater element to its right. Return -1 if none exists.",
+      "difficulty": "MEDIUM",
+      "topic": "Stacks"
+    },
+    {
+      "title": "Implement Queue Using Array",
+      "slug": "queue-using-array",
+      "description": "Implement a queue supporting enqueue, dequeue, front and isEmpty operations.",
+      "difficulty": "EASY",
+      "topic": "Queues"
+    },
+    {
+      "title": "Binary Search",
+      "slug": "binary-search",
+      "description": "Find the index of a target value in a sorted array using binary search. Return -1 if absent.",
+      "difficulty": "EASY",
+      "topic": "Searching"
+    },
+    {
+      "title": "Search in Rotated Sorted Array",
+      "slug": "search-rotated-sorted-array",
+      "description": "Find the target in a rotated sorted array and return its index, or -1 if absent.",
+      "difficulty": "MEDIUM",
+      "topic": "Searching"
+    },
+    {
+      "title": "Implement Merge Sort",
+      "slug": "merge-sort",
+      "description": "Sort an array of integers using the merge sort algorithm.",
+      "difficulty": "MEDIUM",
+      "topic": "Sorting"
+    },
+    {
+      "title": "Two Sum Using Hashing",
+      "slug": "two-sum-hashing",
+      "description": "Find the indices of two distinct elements whose sum equals a given target.",
+      "difficulty": "EASY",
+      "topic": "Hashing"
+    },
+    {
+      "title": "Find Duplicate Number",
+      "slug": "find-duplicate-number",
+      "description": "Find a repeated number in an array containing n+1 integers where values are between 1 and n.",
+      "difficulty": "MEDIUM",
+      "topic": "Hashing"
+    },
+    {
+      "title": "Maximum Depth of Binary Tree",
+      "slug": "maximum-depth-binary-tree",
+      "description": "Find the maximum number of nodes along a path from the root to a leaf.",
+      "difficulty": "EASY",
+      "topic": "Trees"
+    },
+    {
+      "title": "Validate Binary Search Tree",
+      "slug": "validate-binary-search-tree",
+      "description": "Determine whether a binary tree satisfies the binary search tree ordering rules.",
+      "difficulty": "MEDIUM",
+      "topic": "Trees"
+    }
+  ]
+}
