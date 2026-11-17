@@ -78,8 +78,7 @@ export default function Sidebar({
                 key={item.name}
                 href={item.href}
                 onClick={onClose}
-                className={`nav-item ${isActive ? "active" : ""}`}
-              >
+className={`nav-item group ${isActive ? "active" : ""}`}              >
                 <Icon size={19} />
                 <span>{item.name}</span>
 
@@ -96,9 +95,9 @@ export default function Sidebar({
         <Link
           href="/settings"
           onClick={onClose}
-          className={`nav-item ${
-            pathname.startsWith("/settings") ? "active" : ""
-          }`}
+         className={`nav-item group ${
+  pathname.startsWith("/settings") ? "active" : ""
+}`}
         >
           <Settings size={19} />
           <span>Settings</span>

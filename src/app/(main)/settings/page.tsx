@@ -137,7 +137,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="space-y-8 pb-10">
+    <main className="mt-8 space-y-8 pb-10">
       {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-white">

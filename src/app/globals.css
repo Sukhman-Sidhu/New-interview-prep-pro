@@ -2222,3 +2222,500 @@ body {
     width: 100%;
   }
 }
+
+/* Premium dashboard stat cards */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.25),
+    0 0 18px rgba(139, 92, 246, 0.10);
+}
+
+.stat-icon {
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.stat-card:hover .stat-icon {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+.muted-icon {
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.stat-card:hover .muted-icon {
+  transform: translate(3px, -3px);
+  color: #a78bfa;
+}
+
+/* Respect reduced-motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .stat-card,
+  .stat-icon,
+  .muted-icon {
+    transition: none;
+  }
+
+  .stat-card:hover {
+    transform: none;
+  }
+}
+
+/* =================================
+   PREMIUM SIDEBAR HOVER EFFECTS
+================================= */
+
+.sidebar {
+  transition: box-shadow 0.3s ease;
+}
+
+.brand-icon {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand:hover .brand-icon {
+  transform: rotate(-6deg) scale(1.06);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+}
+
+.nav-item {
+  position: relative;
+  overflow: hidden;
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.nav-item > svg {
+  flex-shrink: 0;
+  transition:
+    transform 0.25s ease,
+    color 0.25s ease;
+}
+
+.nav-item:not(.active):hover {
+  transform: translateX(4px);
+  background: rgba(139, 92, 246, 0.10);
+  color: #c4b5fd;
+}
+
+.nav-item:hover > svg {
+  transform: scale(1.12);
+  color: #a78bfa;
+}
+
+/* Active navigation item */
+.nav-item.active {
+  background: linear-gradient(
+    90deg,
+    rgba(139, 92, 246, 0.20),
+    rgba(139, 92, 246, 0.06)
+  );
+  border-color: rgba(139, 92, 246, 0.18);
+  color: #c4b5fd;
+}
+
+.nav-item.active > svg {
+  color: #a78bfa;
+}
+
+/* Active indicator */
+.active-dot {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.nav-item.active:hover .active-dot {
+  transform: scale(1.25);
+  box-shadow: 0 0 10px rgba(167, 139, 250, 0.7);
+}
+
+/* User profile hover */
+.user-profile {
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.user-profile:hover {
+  background: rgba(139, 92, 246, 0.08);
+  border-color: rgba(139, 92, 246, 0.2);
+}
+
+.avatar {
+  transition: transform 0.25s ease;
+}
+
+.user-profile:hover .avatar {
+  transform: scale(1.08);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .sidebar,
+  .brand-icon,
+  .nav-item,
+  .nav-item > svg,
+  .active-dot,
+  .user-profile,
+  .avatar {
+    transition: none !important;
+  }
+
+  .nav-item:hover,
+  .brand:hover .brand-icon,
+  .user-profile:hover .avatar {
+    transform: none !important;
+  }
+}
+/* Resources card hover effects */
+.resource-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.resource-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(139, 92, 246, 0.55);
+  background-color: rgba(139, 92, 246, 0.07);
+  box-shadow:
+    0 10px 25px rgba(0, 0, 0, 0.2),
+    0 0 18px rgba(139, 92, 246, 0.08);
+}
+
+/* Learning link animation */
+.resource-card a {
+  transition: color 0.25s ease;
+}
+
+.resource-card a:hover {
+  color: #c4b5fd;
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .resource-card,
+  .resource-card a {
+    transition: none;
+  }
+
+  .resource-card:hover {
+    transform: none;
+  }
+}
+
+
+/* =====================================
+   PREMIUM ACHIEVEMENTS UI
+===================================== */
+
+/* Statistics cards */
+.achievement-stat-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.achievement-stat-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.25),
+    0 0 18px rgba(139, 92, 246, 0.08);
+}
+
+/* Overall progress card */
+.achievement-progress-card {
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.achievement-progress-card:hover {
+  border-color: rgba(139, 92, 246, 0.35);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.2);
+}
+
+/* Achievement cards */
+.achievement-card {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+.achievement-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(167, 139, 250, 0.7),
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.achievement-card:hover {
+  transform: translateY(-7px);
+}
+
+.achievement-card:hover::before {
+  opacity: 1;
+}
+
+/* Unlocked card */
+.achievement-card.earned {
+  border-color: rgba(139, 92, 246, 0.3);
+  background: linear-gradient(
+    145deg,
+    rgba(139, 92, 246, 0.12),
+    rgba(21, 21, 43, 1)
+  );
+}
+
+.achievement-card.earned:hover {
+  border-color: rgba(167, 139, 250, 0.7);
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.25),
+    0 0 22px rgba(139, 92, 246, 0.13);
+}
+
+/* Locked card */
+.achievement-card.locked:hover {
+  border-color: rgba(139, 92, 246, 0.45);
+  background: rgba(139, 92, 246, 0.055);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+}
+
+/* Achievement icons */
+.achievement-icon {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    filter 0.3s ease;
+}
+
+.achievement-card:hover .achievement-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.achievement-card.earned:hover .achievement-icon {
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.25);
+}
+
+/* Progress bars */
+.achievement-bar {
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.35);
+}
+
+/* Smooth progress animation */
+.achievement-card:hover .achievement-bar {
+  filter: brightness(1.2);
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .achievement-stat-card,
+  .achievement-progress-card,
+  .achievement-card,
+  .achievement-card::before,
+  .achievement-icon,
+  .achievement-bar {
+    transition: none !important;
+  }
+
+  .achievement-stat-card:hover,
+  .achievement-card:hover,
+  .achievement-card:hover .achievement-icon {
+    transform: none !important;
+  }
+}
+
+/* Achievement card hover effects */
+
+.achievement-stat-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.achievement-stat-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(139,92,246,.4);
+  box-shadow: 0 12px 28px rgba(0,0,0,.25),
+              0 0 18px rgba(139,92,246,.08);
+}
+
+.achievement-progress-card {
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+
+.achievement-progress-card:hover {
+  border-color: rgba(139,92,246,.35);
+  box-shadow: 0 10px 28px rgba(0,0,0,.2);
+}
+
+.achievement-card {
+  position: relative;
+  overflow: hidden;
+  transition: transform .3s ease, border-color .3s ease,
+              box-shadow .3s ease, background .3s ease;
+}
+
+.achievement-card.earned {
+  border-color: rgba(139,92,246,.3);
+  background: linear-gradient(145deg, rgba(139,92,246,.12), #15152b);
+}
+
+.achievement-card.locked {
+  border-color: rgba(255,255,255,.1);
+  background: #15152b;
+}
+
+.achievement-card:hover {
+  transform: translateY(-7px);
+}
+
+.achievement-card.earned:hover {
+  border-color: rgba(167,139,250,.7);
+  box-shadow: 0 14px 30px rgba(0,0,0,.25),
+              0 0 22px rgba(139,92,246,.13);
+}
+
+.achievement-card.locked:hover {
+  border-color: rgba(139,92,246,.45);
+  background: rgba(139,92,246,.055);
+  box-shadow: 0 12px 28px rgba(0,0,0,.2);
+}
+
+.achievement-icon {
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.achievement-card:hover .achievement-icon {
+  transform: scale(1.1) rotate(-5deg);
+}
+
+.achievement-card.earned:hover .achievement-icon {
+  box-shadow: 0 0 20px rgba(139,92,246,.25);
+}
+
+.achievement-bar {
+  box-shadow: 0 0 10px rgba(139,92,246,.35);
+  transition: filter .3s ease;
+}
+
+.achievement-card:hover .achievement-bar {
+  filter: brightness(1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .achievement-stat-card,
+  .achievement-progress-card,
+  .achievement-card,
+  .achievement-icon,
+  .achievement-bar {
+    transition: none !important;
+  }
+
+  .achievement-stat-card:hover,
+  .achievement-card:hover,
+  .achievement-card:hover .achievement-icon {
+    transform: none !important;
+  }
+}
+
+/* LIGHT THEME CONTRAST FIXES */
+
+[data-theme="light"] [class~="text-gray-300"] {
+  color: #647087 !important;
+}
+
+[data-theme="light"] [class~="bg-white/5"] {
+  background-color: #f8f9fd !important;
+}
+
+[data-theme="light"] [class~="bg-white/10"] {
+  background-color: #e9eaf2 !important;
+}
+
+[data-theme="light"] [class*="border-white/"] {
+  border-color: #e1e4ef !important;
+}
+
+[data-theme="light"] .nav-item.active {
+  background: #eee8ff;
+  border-color: #d9ccff;
+  color: #5633b3;
+}
+
+[data-theme="light"] .nav-item.active > svg {
+  color: #7045dc;
+}
+
+[data-theme="light"] .nav-item:not(.active):hover {
+  color: #5633b3;
+}
+
+[data-theme="light"] .nav-item:not(.active):hover > svg {
+  color: #7045dc;
+}
+
+[data-theme="light"] .achievement-stat-card,
+[data-theme="light"] .achievement-progress-card,
+[data-theme="light"] .achievement-card {
+  border-color: #e1e4ef;
+  color: #172033;
+  box-shadow: 0 4px 18px rgba(25, 35, 60, 0.05);
+}
+
+[data-theme="light"] .achievement-card.earned {
+  background: linear-gradient(145deg, #f3edff, #ffffff) !important;
+  border-color: #d9ccff;
+}
+
+[data-theme="light"] .achievement-card.locked {
+  background: #ffffff !important;
+}
+
+[data-theme="light"] .achievement-card [class~="text-purple-400"],
+[data-theme="light"] .achievement-progress-card [class~="text-purple-400"] {
+  color: #5633b3 !important;
+}
+
+[data-theme="light"] .achievement-card [class~="text-green-400"] {
+  color: #15803d !important;
+}
+

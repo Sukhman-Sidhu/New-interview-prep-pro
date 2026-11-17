@@ -127,7 +127,7 @@ export default function AchievementsPage() {
         <>
           {/* Statistics */}
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-[#15152b] p-6">
+            <div className="achievement-stat-card rounded-2xl border border-white/10 bg-[#15152b] p-6">
               <p className="text-sm text-gray-400">Badges Earned</p>
               <h2 className="mt-3 text-3xl font-bold text-white">
                 {earnedCount}
@@ -137,7 +137,7 @@ export default function AchievementsPage() {
               </h2>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#15152b] p-6">
+            <div className="achievement-stat-card rounded-2xl border border-white/10 bg-[#15152b] p-6">
               <p className="text-sm text-gray-400">
                 Coding Submissions
               </p>
@@ -146,7 +146,7 @@ export default function AchievementsPage() {
               </h2>
             </div>
 
-            <div className="rounded-2xl border border-white/10 bg-[#15152b] p-6">
+            <div className="achievement-stat-card rounded-2xl border border-white/10 bg-[#15152b] p-6">
               <p className="text-sm text-gray-400">
                 Mock Interviews
               </p>
@@ -157,7 +157,7 @@ export default function AchievementsPage() {
           </div>
 
           {/* Overall Progress */}
-          <div className="rounded-2xl border border-white/10 bg-[#15152b] p-6">
+          <div className="achievement-progress-card rounded-2xl border border-white/10 bg-[#15152b] p-6">
             <div className="flex items-center justify-between gap-3">
               <div>
                 <h2 className="text-lg font-semibold text-white">
@@ -206,19 +206,17 @@ export default function AchievementsPage() {
                 return (
                   <div
                     key={achievement.title}
-                    className={`rounded-2xl border p-6 transition ${
-                      earned
-                        ? "border-purple-500/40 bg-purple-500/10"
-                        : "border-white/10 bg-[#15152b]"
-                    }`}
+                   className={`achievement-card rounded-2xl border bg-[#15152b] p-6 ${
+  earned ? "earned" : "locked"
+}`}
                   >
                     <div className="flex items-start justify-between">
                       <div
-                        className={`flex h-14 w-14 items-center justify-center rounded-2xl text-3xl ${
-                          earned
-                            ? "bg-purple-500/20"
-                            : "bg-white/5 grayscale"
-                        }`}
+                       className={`achievement-icon flex h-14 w-14 items-center justify-center rounded-2xl text-3xl ${
+  earned
+    ? "bg-purple-500/20"
+    : "bg-white/5 grayscale"
+}`}
                       >
                         {achievement.icon}
                       </div>
@@ -262,7 +260,7 @@ export default function AchievementsPage() {
 
                       <div className="h-2 overflow-hidden rounded-full bg-white/10">
                         <div
-                          className="h-full rounded-full bg-purple-500 transition-all"
+                        className="achievement-bar h-full rounded-full bg-purple-500 transition-all"
                           style={{ width: `${progress}%` }}
                         />
                       </div>
