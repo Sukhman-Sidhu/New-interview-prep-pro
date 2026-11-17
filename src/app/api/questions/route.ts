@@ -10,12 +10,30 @@ type QuestionInput = {
   title: string;
   slug: string;
   description: string;
-  difficulty?: Difficulty;
+  difficulty: Difficulty;
   topic: string;
   examples?: Prisma.InputJsonValue;
+  testCases?: Prisma.InputJsonValue;
 };
 
-const validDifficulties = ["EASY", "MEDIUM", "HARD"];
+type RawQuestion = {
+  title?: unknown;
+  slug?: unknown;
+  description?: unknown;
+  difficulty?: unknown;
+  topic?: unknown;
+  examples?: unknown;
+  testCases?: unknown;
+};
+
+const validDifficulties = ["EASY", "MEDIUM", "HARD"] as const;
+
+function isDifficulty(value: unknown): value is Difficulty {
+  return (
+    typeof value === "string" &&
+    validDifficulties.includes(value as (typeof validDifficulties)[number])
+  );
+}
 
 export async function GET() {
   try {
@@ -40,8 +58,7 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
 
-    // Support both a single question and multiple questions.
-    const rawQuestions = Array.isArray(body.questions)
+    const rawQuestions: RawQuestion[] = Array.isArray(body.questions)
       ? body.questions
       : [body];
 
@@ -52,7 +69,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate all questions before inserting.
+    // Validate all questions.
     for (const question of rawQuestions) {
       if (
         !question ||
@@ -75,8 +92,9 @@ export async function POST(request: Request) {
       }
 
       if (
-        question.difficulty &&
-        !validDifficulties.includes(question.difficulty)
+        question.difficulty !== undefined &&
+        question.difficulty !== null &&
+        !isDifficulty(question.difficulty)
       ) {
         return NextResponse.json(
           {
@@ -87,29 +105,25 @@ export async function POST(request: Request) {
       }
     }
 
-    // Convert validated input into Prisma-compatible data.
-    const questions: QuestionInput[] = rawQuestions.map(
-      (question) => ({
-        title: question.title.trim(),
-        slug: question.slug.trim(),
-        description: question.description.trim(),
-        difficulty: question.difficulty || "EASY",
-        topic: question.topic.trim(),
-        examples: question.examples,
-      })
-    );
+    // Convert validated data into Prisma-compatible data.
+    const questions: QuestionInput[] = rawQuestions.map((question) => ({
+      title: question.title as string,
+      slug: question.slug as string,
+      description: question.description as string,
+      difficulty: isDifficulty(question.difficulty)
+        ? question.difficulty
+        : "EASY",
+      topic: question.topic as string,
+      ...(question.examples !== undefined && {
+        examples: question.examples as Prisma.InputJsonValue,
+      }),
+      ...(question.testCases !== undefined && {
+        testCases: question.testCases as Prisma.InputJsonValue,
+      }),
+    }));
 
     const result = await prisma.dsaQuestion.createMany({
-      data: questions.map((question) => ({
-        title: question.title,
-        slug: question.slug,
-        description: question.description,
-        difficulty: question.difficulty ?? "EASY",
-        topic: question.topic,
-        ...(question.examples !== undefined && {
-          examples: question.examples,
-        }),
-      })),
+      data: questions,
       skipDuplicates: true,
     });
 
@@ -127,6 +141,80 @@ export async function POST(request: Request) {
 
     return NextResponse.json(
       { error: "Failed to create questions" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  try {
+    const body = await request.json();
+
+    const rawQuestions: RawQuestion[] = Array.isArray(body.questions)
+      ? body.questions
+      : [];
+
+    if (rawQuestions.length === 0) {
+      return NextResponse.json(
+        { error: "No questions provided" },
+        { status: 400 }
+      );
+    }
+
+    const results: {
+      slug: string;
+      status: "INVALID_DATA" | "UPDATED" | "SLUG_NOT_FOUND";
+    }[] = [];
+
+    for (const question of rawQuestions) {
+      if (
+        typeof question.slug !== "string" ||
+        !Array.isArray(question.testCases)
+      ) {
+        results.push({
+          slug:
+            typeof question.slug === "string"
+              ? question.slug
+              : "unknown",
+          status: "INVALID_DATA",
+        });
+        continue;
+      }
+
+      const result = await prisma.dsaQuestion.updateMany({
+        where: {
+          slug: question.slug.trim(),
+        },
+        data: {
+          testCases: question.testCases as Prisma.InputJsonValue,
+        },
+      });
+
+      results.push({
+        slug: question.slug,
+        status: result.count > 0 ? "UPDATED" : "SLUG_NOT_FOUND",
+      });
+    }
+
+    const updated = results.filter(
+      (item) => item.status === "UPDATED"
+    ).length;
+
+    return NextResponse.json({
+      message: "Test case import completed",
+      updated,
+      skipped: results.length - updated,
+      totalReceived: results.length,
+      results,
+    });
+  } catch (error) {
+    console.error("Update test cases error:", error);
+
+    return NextResponse.json(
+      {
+        error: "Failed to update test cases",
+        details: error instanceof Error ? error.message : String(error),
+      },
       { status: 500 }
     );
   }

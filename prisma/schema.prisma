@@ -33,6 +33,7 @@ model DsaQuestion {
   difficulty  Difficulty   @default(EASY)
   topic       String
   examples    Json?
+  testCases   Json?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime     @updatedAt
   submissions Submission[]

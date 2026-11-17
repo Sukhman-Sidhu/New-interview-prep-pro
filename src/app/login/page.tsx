@@ -30,9 +30,7 @@ export default function LoginPage() {
       if (!response.ok) {
         throw new Error(data.error || "Login failed");
       }
-
-      router.push("/");
-      router.refresh();
+window.location.href = "/";
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {

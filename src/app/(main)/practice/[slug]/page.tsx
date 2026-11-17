@@ -11,7 +11,51 @@ type Question = {
   description: string;
   difficulty: string;
   topic: string;
+  testCases?: {
+    input: string;
+    expectedOutput: string;
+  }[] | null;
 };
+
+function getStarterCode(language: string) {
+  switch (language) {
+    case "javascript":
+      return `// Write your JavaScript solution here
+const fs = require("fs");
+
+const input = fs.readFileSync(0, "utf8").trim().split(/\\s+/).map(Number);
+
+// Write your logic here
+`;
+
+    case "python":
+      return `# Write your Python solution here
+
+# Read input
+n = int(input())
+arr = list(map(int, input().split()))
+target = int(input())
+
+# Write your logic here
+`;
+
+    case "java":
+      return `import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Write your Java solution here
+
+        sc.close();
+    }
+}`;
+
+    default:
+      return "";
+  }
+}
 
 export default function QuestionDetailPage({
   params,
@@ -21,7 +65,9 @@ export default function QuestionDetailPage({
   const router = useRouter();
 
   const [question, setQuestion] = useState<Question | null>(null);
-  const [code, setCode] = useState("// Write your solution here");
+const [code, setCode] = useState(() =>
+  getStarterCode("javascript")
+);
   const [language, setLanguage] = useState("javascript");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
@@ -30,6 +76,7 @@ export default function QuestionDetailPage({
   const [running, setRunning] = useState(false);
 const [output, setOutput] = useState("");
 const [executionStatus, setExecutionStatus] = useState("");
+const [testResults, setTestResults] = useState<any[]>([]);
 
   useEffect(() => {
     let cancelled = false;
@@ -64,48 +111,71 @@ const [executionStatus, setExecutionStatus] = useState("");
     };
   }, [params, router]);
 
-  async function handleSubmit() {
-    if (!question || !code.trim()) {
-      setSubmissionError(true);
-      setSubmissionMessage("Please write some code before submitting.");
-      return;
-    }
-
-    setSubmitting(true);
-    setSubmissionMessage("");
-
-    try {
-      const response = await fetch("/api/submissions", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          code,
-          language,
-          questionId: question.id,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Submission failed.");
-      }
-
-      setSubmissionError(false);
-      setSubmissionMessage("Your code has been saved successfully!");
-    } catch (error) {
-      setSubmissionError(true);
-      setSubmissionMessage(
-        error instanceof Error
-          ? error.message
-          : "Something went wrong. Please try again."
-      );
-    } finally {
-      setSubmitting(false);
-    }
+ async function handleSubmit() {
+  if (!question || !code.trim()) {
+    setSubmissionError(true);
+    setSubmissionMessage("Please write some code before submitting.");
+    return;
   }
+
+  setSubmitting(true);
+  setSubmissionMessage("");
+  setTestResults([]);
+  setOutput("Evaluating your test cases...");
+  setExecutionStatus("Evaluating");
+
+  try {
+    const response = await fetch("/api/submissions", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        code,
+        language,
+        questionId: question.id,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Submission failed.");
+    }
+
+    setTestResults(data.testResults || []);
+    setExecutionStatus(data.status);
+
+    setSubmissionError(data.status !== "ACCEPTED");
+
+    setSubmissionMessage(
+      data.status === "ACCEPTED"
+        ? `Accepted! All ${data.total} test cases passed.`
+        : `${data.status}: ${data.passed}/${data.total} test cases passed.`
+    );
+
+    setOutput(
+      (data.testResults || [])
+        .map(
+          (test: any, index: number) =>
+            `Test Case ${index + 1}: ${test.status}\n` +
+            `Expected: ${test.expectedOutput}\n` +
+            `Actual: ${test.actualOutput || "(no output)"}\n` +
+            (test.stderr ? `Error: ${test.stderr}\n` : "") +
+            (test.compileOutput
+              ? `Compilation: ${test.compileOutput}\n`
+              : "")
+        )
+        .join("\n")
+    );
+  } catch (error) {
+    setSubmissionError(true);
+    setExecutionStatus("Error");
+    setSubmissionMessage(
+      error instanceof Error ? error.message : "Submission failed."
+    );
+  } finally {
+    setSubmitting(false);
+  }
+}
 
   async function handleRunCode() {
   if (!code.trim()) {
@@ -211,6 +281,36 @@ const [executionStatus, setExecutionStatus] = useState("");
             <p className="mt-3 whitespace-pre-line leading-7 text-gray-300">
               {question.description}
             </p>
+            {question.testCases && question.testCases.length > 0 && (
+  <div className="mt-8">
+    <h2 className="text-lg font-semibold">Test Cases</h2>
+
+    <div className="mt-4 space-y-4">
+      {question.testCases.map((test, index) => (
+        <div
+          key={index}
+          className="rounded-xl border border-white/10 bg-white/5 p-4"
+        >
+          <h3 className="font-medium">
+            Example {index + 1}
+          </h3>
+
+          <p className="mt-3 text-sm text-gray-400">Input</p>
+          <pre className="mt-1 whitespace-pre-wrap rounded-lg bg-black/20 p-3 text-sm">
+            {test.input}
+          </pre>
+
+          <p className="mt-3 text-sm text-gray-400">
+            Expected Output
+          </p>
+          <pre className="mt-1 whitespace-pre-wrap rounded-lg bg-black/20 p-3 text-sm text-green-400">
+            {test.expectedOutput}
+          </pre>
+        </div>
+      ))}
+    </div>
+  </div>
+)}
           </section>
 
           <section className="question-editor-card rounded-2xl border border-white/10 bg-white/5 p-6">
@@ -220,9 +320,17 @@ const [executionStatus, setExecutionStatus] = useState("");
               <select
                 value={language}
                 onChange={(e) => {
-                  setLanguage(e.target.value);
-                  setSubmissionMessage("");
-                }}
+  const selectedLanguage = e.target.value;
+
+  setLanguage(selectedLanguage);
+  setCode(getStarterCode(selectedLanguage));
+
+  setSubmissionMessage("");
+  setSubmissionError(false);
+  setOutput("");
+  setExecutionStatus("");
+  setTestResults([]);
+}}
                 className="question-language rounded-lg border border-white/10 bg-[#151a2e] p-2 text-sm"
               >
                 <option value="javascript">JavaScript</option>
@@ -231,15 +339,12 @@ const [executionStatus, setExecutionStatus] = useState("");
               </select>
             </div>
 
-            <textarea
-              value={code}
-              onChange={(e) => {
-                setCode(e.target.value);
-                setSubmissionMessage("");
-              }}
-              spellCheck={false}
-              className="question-editor mt-5 h-96 w-full resize-y rounded-xl border border-white/10 bg-[#080b18] p-4 font-mono text-sm text-green-300 outline-none focus:border-purple-500"
-            />
+           <textarea
+  value={code}
+  onChange={(e) => setCode(e.target.value)}
+  spellCheck={false}
+  className="question-editor mt-5 h-96 w-full resize-y rounded-xl border border-white/10 bg-[#080b18] p-4 font-mono text-sm text-green-300 outline-none focus:border-purple-500"
+/>
 
            <div className="mt-4 flex flex-wrap gap-3">
   <button
